@@ -1,0 +1,50 @@
+<!-- templates/escanear.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Escanear Producto</h1>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="producto" class="form-label">Seleccione un producto:</label>
+                    <select class="form-select" id="producto" name="producto" required>
+                        <option value="">-- Seleccione --</option>
+                        {% for producto in productos %}
+                            <option value="{{ producto.id }}">{{ producto.nombre }} (Lote: {{ producto.lote }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="alergeno" class="form-label">Seleccione un alérgeno:</label>
+                    <select class="form-select" id="alergeno" name="alergeno" required>
+                        <option value="">-- Seleccione --</option>
+                        {% for alergeno in alergenos %}
+                            <option value="{{ alergeno.id }}">{{ alergeno.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Escanear Producto</button>
+        </form>
+    </div>
+</div>
+
+{% if resultado %}
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Resultado del Escaneo</h2>
+        <p><strong>Producto:</strong> {{ resultado.producto }}</p>
+        <p><strong>Alérgeno buscado:</strong> {{ resultado.alergeno }}</p>
+        <div class="alert {% if resultado.contiene %}alert-danger{% else %}alert-success{% endif %} mt-3">
+            {% if resultado.contiene %}
+                ¡ALERTA! El producto contiene {{ resultado.alergeno }}
+            {% else %}
+                El producto NO contiene {{ resultado.alergeno }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

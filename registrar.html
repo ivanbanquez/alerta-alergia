@@ -1,0 +1,39 @@
+<!-- templates/registrar.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4">Registrar Nuevo Producto</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre del Producto</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="lote" class="form-label">Número de Lote</label>
+                <input type="text" class="form-control" id="lote" name="lote" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Alérgenos presentes:</label>
+                <div class="row">
+                    {% for alergeno in alergenos %}
+                    <div class="col-md-4 mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" 
+                                   name="alergenos" 
+                                   value="{{ alergeno.id }}" 
+                                   id="alergeno{{ alergeno.id }}">
+                            <label class="form-check-label" for="alergeno{{ alergeno.id }}">
+                                {{ alergeno.nombre }}
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Registrar Producto</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
